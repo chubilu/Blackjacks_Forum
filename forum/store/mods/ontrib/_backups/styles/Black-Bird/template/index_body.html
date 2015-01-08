@@ -1,0 +1,60 @@
+<!-- INCLUDE overall_header.html -->
+<br clear="all" />
+		
+<!-- INCLUDE forumlist_body.html -->
+<!-- IF S_MCHAT_ENABLE and S_MCHAT_ON_INDEX and S_MCHAT_LOCATION --><!-- INCLUDE mchat_body.html --><!-- ENDIF -->
+<!-- IF S_MCHAT_ENABLE and S_MCHAT_ON_INDEX and not S_MCHAT_LOCATION --><!-- INCLUDE mchat_body.html --><!-- ENDIF -->
+<br clear="all" />
+
+<table class="tablebg" width="100%" cellspacing="0">
+<tr>
+	<td class="cat2" colspan="2"><h4><!-- IF S_DISPLAY_ONLINE_LIST --><!-- IF U_VIEWONLINE --><a href="{U_VIEWONLINE}">{L_WHO_IS_ONLINE}</a><!-- ELSE -->{L_WHO_IS_ONLINE}<!-- ENDIF --> -<!-- ENDIF -->&nbsp;{L_STATISTICS}</h4></td>
+
+	</tr>
+<tr>
+	<td class="row1" width="100%">
+	<span class="genmed">{TOTAL_USERS_ONLINE} ({L_ONLINE_EXPLAIN})<br />{RECORD_USERS}<br /><br />{LOGGED_IN_USER_LIST}</span>
+	<!-- IF S_DISPLAY_ONLINE_LIST --><!-- IF LEGEND --><br /><b class="gensmall">{L_LEGEND} :: {LEGEND}</b><br /><br /><!-- ENDIF --><!-- ENDIF -->
+	<p class="genmed2">{TOTAL_POSTS} | {TOTAL_TOPICS} | {TOTAL_USERS} | {NEWEST_USER}</p>
+	</td>
+</tr>
+</table>
+
+<!-- IF not S_IS_BOT and U_MARK_FORUMS -->
+<table class="tablebg" cellspacing="0" width="100%">
+<tr>
+<td class="cookies" nowrap="nowrap">&nbsp;
+<!-- IF not S_IS_BOT and U_MARK_FORUMS --><a href="{U_MARK_FORUMS}">{L_MARK_FORUMS_READ}</a></td><!-- ENDIF -->
+<td class="cookies" align="{S_CONTENT_FLOW_END}" nowrap="nowrap"><!-- IF not S_IS_BOT or U_TEAM --><a href="{U_DELETE_COOKIES}">{L_DELETE_COOKIES}</a><!-- ENDIF --><!-- IF not S_IS_BOT and U_TEAM --> | <!-- ENDIF --><!-- IF U_TEAM --><a href="{U_TEAM}">{L_THE_TEAM}</a>&nbsp;&nbsp;<!-- ENDIF --></td></tr>
+</table>
+<!-- ENDIF -->
+<!-- INCLUDE mchat_stats.html -->
+<!-- IF S_DISPLAY_BIRTHDAY_LIST and BIRTHDAY_LIST -->
+	<br clear="all" />
+
+	<table class="tablebg" width="100%" cellspacing="1">
+	<tr>
+		<td class="cat"><h4>{L_BIRTHDAYS}</h4></td>
+	</tr>
+	<tr>
+		<td class="row1" width="100%"><p class="genmed"><!-- IF BIRTHDAY_LIST -->{L_CONGRATULATIONS}: <b>{BIRTHDAY_LIST}</b><!-- ELSE -->{L_NO_BIRTHDAYS}<!-- ENDIF -->		<!-- IF BIRTHDAYS_AHEAD_LIST --><br />{L_BIRTHDAYS_AHEAD}: <b>{BIRTHDAYS_AHEAD_LIST}</b><!-- ENDIF --></p></td>
+	</tr>
+	</table>
+<!-- ENDIF -->
+
+<br clear="all" />
+
+<table class="legend" align="center">
+<tr>
+	<td width="20" align="center">{FORUM_UNREAD_IMG}</td>
+	<td><span class="gensmall3">{L_UNREAD_POSTS}</span></td>
+	<td>&nbsp;&nbsp;</td>
+	<td width="20" align="center">{FORUM_IMG}</td>
+	<td><span class="gensmall3">{L_NO_UNREAD_POSTS}</span></td>
+	<td>&nbsp;&nbsp;</td>
+	<td width="20" align="center">{FORUM_LOCKED_IMG}</td>
+	<td><span class="gensmall3">{L_FORUM_LOCKED}</span></td>
+</tr>
+</table>
+
+<!-- INCLUDE overall_footer.html -->

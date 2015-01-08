@@ -1,0 +1,67 @@
+<!-- INCLUDE overall_header.html -->
+
+<!-- IF S_SHOW_COPPA or S_REGISTRATION -->
+	
+	<form method="post" action="{S_UCP_ACTION}">
+	
+   <div class='menu_top'><div class='menu_top_l'><div class='menu_top_r'>
+        
+        </div></div></div>  
+        <div class='m_l'><div class='m_r'><div class='menu_text'> 
+	<table class="tablebg" width="100%" cellspacing="{$CA_SPACING}">
+	<tr>
+		<td class="row1" align="center">
+			<table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
+			<tr>
+				<!-- IF S_SHOW_COPPA -->
+					<td class="gen" align="center"><br />{L_COPPA_BIRTHDAY}<br /><br /><a href="{U_COPPA_NO}">{L_COPPA_NO}</a> :: <a href="{U_COPPA_YES}">{L_COPPA_YES}</a><br /><br /></td>
+				<!-- ELSE -->
+					<td>
+						<span class="genmed"><br />{L_TERMS_OF_USE}<br /><br /></span>
+						<div align="center">
+							<input class="btnlite" type="submit" id="agreed" name="agreed" value="{L_AGREE}" /><br /><br />
+							<input class="btnlite" type="submit" name="not_agreed" value="{L_NOT_AGREE}" />
+						</div>
+					</td>
+				<!-- ENDIF -->
+			</tr>
+			</table>
+		</td>
+	</tr>
+	</table>
+	{$CA_BLOCK_END}
+	{S_HIDDEN_FIELDS}
+	{S_FORM_TOKEN}
+	</form>
+	
+<!-- ELSEIF S_AGREEMENT -->
+
+    {$CA_BLOCK_START}
+	{$CA_CAP2_START}{SITENAME} - {AGREEMENT_TITLE}{$CA_CAP2_END}
+	<table class="tablebg" width="100%" cellspacing="{$CA_SPACING}">
+	<tr>
+		<td class="row1" align="center">
+			<table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
+			<tr>
+				<td>
+					<span class="genmed"><br />{AGREEMENT_TEXT}<br /><br /></span>
+					<div align="center">
+						<a href="{U_BACK}">{L_BACK}</a>
+					</div>
+				</td>
+			</tr>
+			</table>
+		</td>
+	</tr>
+	</table>
+	{$CA_BLOCK_END}
+
+<!-- ENDIF -->
+   </div></div></div>      
+        <div class='menu_bot'>    
+        <div class='menu_bot_l'>  
+        <div class='menu_bot_r'>
+
+        </div></div></div>
+
+<!-- INCLUDE overall_footer.html -->

@@ -1,0 +1,22 @@
+
+	<!-- IF PAGINATION -->
+		<table class="row12" width="876" align="{S_CONTENT_FLOW_END}" cellspacing="0">
+		<tr>
+			<td class="nav" valign="middle" nowrap="nowrap">&nbsp;{PAGE_NUMBER}<br /></td>
+			<td class="gensmall" nowrap="nowrap">&nbsp;[ <!-- IF TOTAL_TOPICS -->{TOTAL_TOPICS}<!-- ELSEIF TOTAL_POSTS -->{TOTAL_POSTS}<!-- ELSE -->{TOTAL}<!-- ENDIF --> ]&nbsp;</td>
+			<td class="gensmall" width="100%" align="{S_CONTENT_FLOW_END}" nowrap="nowrap"><!-- INCLUDE pagination.html --></td>
+		</tr>
+		</table>
+		<br />
+	<!-- ENDIF -->
+	
+			<!-- IF JUMPBOX --><!-- ELSE --><table class="row12" width="876" align="right" cellspacing="0"><tr><td align="right"><!-- INCLUDE jumpbox.html --></td></tr></table><!-- ENDIF -->
+			
+			</td>
+		</tr>
+	</table>
+	
+</div>
+
+
+<!-- INCLUDE overall_footer.html -->

@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="{S_CONTENT_DIRECTION}" lang="{S_USER_LANG}" xml:lang="{S_USER_LANG}">
+<head>
+
+<link href="{ROOT_PATH}mobiquo/smartbanner/appbanner.css" rel="stylesheet" type="text/css" media="screen" />
+<script type="text/javascript" src="{ROOT_PATH}mobiquo/smartbanner/appbanner.js"></script>
+
+<meta http-equiv="content-type" content="text/html; charset={S_CONTENT_ENCODING}" />
+<meta http-equiv="content-language" content="{S_USER_LANG}" />
+<meta http-equiv="content-style-type" content="text/css" />
+<meta http-equiv="imagetoolbar" content="no" />
+<meta name="resource-type" content="document" />
+<meta name="distribution" content="global" />
+<meta name="copyright" content="2000, 2002, 2005, 2007 phpBB Group" />
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9" />
+{META}
+<title>{SITENAME} &bull; <!-- IF S_IN_MCP -->{L_MCP} &bull; <!-- ELSEIF S_IN_UCP -->{L_UCP} &bull; <!-- ENDIF -->{PAGE_TITLE}</title>
+{TAPATALK_HEAD}
+<!-- IF S_ENABLE_FEEDS -->
+	<!-- IF S_ENABLE_FEEDS_OVERALL --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {SITENAME}" href="{U_FEED}" /><!-- ENDIF -->
+	<!-- IF S_ENABLE_FEEDS_NEWS --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FEED_NEWS}" href="{U_FEED}?mode=news" /><!-- ENDIF -->
+	<!-- IF S_ENABLE_FEEDS_FORUMS --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_ALL_FORUMS}" href="{U_FEED}?mode=forums" /><!-- ENDIF -->
+   	<!-- IF S_ENABLE_FEEDS_TOPICS --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FEED_TOPICS_NEW}" href="{U_FEED}?mode=topics" /><!-- ENDIF -->
+    <!-- IF S_ENABLE_FEEDS_TOPICS_ACTIVE --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FEED_TOPICS_ACTIVE}" href="{U_FEED}?mode=topics_active" /><!-- ENDIF -->
+    <!-- IF S_ENABLE_FEEDS_FORUM and S_FORUM_ID --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FORUM} - {FORUM_NAME}" href="{U_FEED}?f={S_FORUM_ID}" /><!-- ENDIF -->
+	<!-- IF S_ENABLE_FEEDS_TOPIC and S_TOPIC_ID --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_TOPIC} - {TOPIC_TITLE}" href="{U_FEED}?f={S_FORUM_ID}&amp;t={S_TOPIC_ID}" /><!-- ENDIF -->
+<!-- ENDIF -->
+<!--[if lt IE 7]>
+<script src="{T_TEMPLATE_PATH}/IE7.js" type="text/javascript"></script>
+<![endif]-->
+<script type="text/javascript">
+// <![CDATA[
+<!-- IF S_USER_PM_POPUP -->
+	if ({S_NEW_PM})
+	{
+		popup('{UA_POPUP_PM}', 400, 225, '_phpbbprivmsg');
+	}
+<!-- ENDIF -->
+
+if (typeof blankImg == 'undefined') var blankImg = '{T_THEME_PATH}/images/spacer.gif';
+
+function popup(url, width, height, name)
+{
+	if (!name)
+	{
+		name = '_popup';
+	}
+
+	window.open(url.replace(/&amp;/g, '&'), name, 'height=' + height + ',resizable=yes,scrollbars=yes,width=' + width);
+	return false;
+}
+
+function jumpto()
+{
+	var page = prompt('{LA_JUMP_PAGE}:', '{ON_PAGE}');
+	var per_page = '{PER_PAGE}';
+	var base_url = '{A_BASE_URL}';
+
+	if (page !== null && !isNaN(page) && page == Math.floor(page) && page > 0)
+	{
+		if (base_url.indexOf('?') == -1)
+		{
+			document.location.href = base_url + '?start=' + ((page - 1) * per_page);
+		}
+		else
+		{
+			document.location.href = base_url.replace(/&amp;/g, '&') + '&start=' + ((page - 1) * per_page);
+		}
+	}
+}
+
+/**
+* Find a member
+*/
+function find_username(url)
+{
+	popup(url, 760, 570, '_usersearch');
+	return false;
+}
+
+/**
+* Mark/unmark checklist
+* id = ID of parent container, name = name prefix, state = state [true/false]
+*/
+function marklist(id, name, state)
+{
+	var parent = document.getElementById(id);
+	if (!parent)
+	{
+		eval('parent = document.' + id);
+	}
+
+	if (!parent)
+	{
+		return;
+	}
+
+	var rb = parent.getElementsByTagName('input');
+	
+	for (var r = 0; r < rb.length; r++)
+	{
+		if (rb[r].name.substr(0, name.length) == name)
+		{
+			rb[r].checked = state;
+		}
+	}
+}
+
+<!-- IF ._file -->
+
+	/**
+	* Play quicktime file by determining it's width/height
+	* from the displayed rectangle area
+	*
+	* Only defined if there is a file block present.
+	*/
+	function play_qt_file(obj)
+	{
+		var rectangle = obj.GetRectangle();
+
+		if (rectangle)
+		{
+			rectangle = rectangle.split(',')
+			var x1 = parseInt(rectangle[0]);
+			var x2 = parseInt(rectangle[2]);
+			var y1 = parseInt(rectangle[1]);
+			var y2 = parseInt(rectangle[3]);
+
+			var width = (x1 < 0) ? (x1 * -1) + x2 : x2 - x1;
+			var height = (y1 < 0) ? (y1 * -1) + y2 : y2 - y1;
+		}
+		else
+		{
+			var width = 200;
+			var height = 0;
+		}
+
+		obj.width = width;
+		obj.height = height + 16;
+
+		obj.SetControllerVisible(true);
+
+		obj.Play();
+	}
+<!-- ENDIF -->
+
+// ]]>
+</script>
+
+<link rel="stylesheet" href="{T_STYLESHEET_LINK}" type="text/css" />
+
+<!--[if lt IE 8]><link href="{T_THEME_PATH}/ie.css" rel="stylesheet" type="text/css" /><![endif]-->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-12615840-4']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<!-- IF S_MCHAT_ENABLE and (S_MCHAT_ON_INDEX or U_MCHAT) -->
+<script type="text/javascript" src="{ROOT_PATH}mchat/jquery-1.5.0.min.js"></script>
+<script type="text/javascript" src="{ROOT_PATH}mchat/jquery_cookie_mini.js"></script>
+<!-- ENDIF -->
+
+<!-- INCLUDE mods/reimg_content.html -->
+</head>
+<body id="phpbb" class="{S_CONTENT_DIRECTION}">
+
+<div align="center">
+    <table id="container" style="width:1000px;" cellspacing="0" cellpadding="0" border="0">
+        <tr>
+		    <td id="middle" valign="top">
+			    <a id="top" name="top" accesskey="t"></a>
+				<div id="wrapper">
+				    <div id="banner">
+					    <a href="{U_INDEX}" title="{L_INDEX}" id="logo">{SITE_LOGO_IMG}</a>
+					</div>
+					<div id="crumbs">
+					    <div style="float:left;">
+						    <ul class="breadcrumbs">
+							    <li class="icon-home"><a class="btnmain" href="{U_INDEX}" accesskey="h">{L_INDEX}</a> <!-- BEGIN navlinks --> <strong>&#8249;</strong> <a href="{navlinks.U_VIEW_FORUM}">{navlinks.FORUM_NAME}</a><!-- END navlinks --></li>
+							</ul>
+						</div>
+						<div style="float:right; padding:8px 2px 0 0;">
+						    <!-- IF  S_USER_LOGGED_IN --><a class="btnmain" href="{U_LOGIN_LOGOUT}" title="{L_LOGIN_LOGOUT}" accesskey="l">{L_LOGIN_LOGOUT}</a>
+<!-- ENDIF -->
+							<!-- IF not S_USER_LOGGED_IN and S_REGISTER_ENABLED and not (S_SHOW_COPPA or S_REGISTRATION) --><a class="btnmain" href="{U_REGISTER}">{L_REGISTER}</a><!-- ENDIF -->
+							<!-- IF U_RESTORE_PERMISSIONS --><a class="btnmain" href="{U_RESTORE_PERMISSIONS}">{L_RESTORE_PERMISSIONS}</a><!-- ENDIF -->
+						</div>						
+					</div>
+					<div id="header">
+					    <div id="menu">
+                            <a class="home" href="{U_INDEX}" title="{L_HOME}"><span>{L_HOME}</span></a>
+                            <!-- IF S_MCHAT_ENABLE and U_MCHAT --><a class="chat" href="{U_MCHAT}#mChat" title="{L_MCHAT_TITLE}"><span>{L_MCHAT_TITLE}</span></a><!-- ENDIF -->
+							<!-- IF S_DISPLAY_SEARCH --><a class="search" href="{U_SEARCH}" title="{L_SEARCH_ADV_EXPLAIN}"><span>{L_SEARCH}</span></a>
+<!-- ENDIF -->
+							<!-- IF not S_IS_BOT -->
+							    <!-- IF S_DISPLAY_MEMBERLIST --><a class="members" href="{U_MEMBERLIST}" title="{L_MEMBERLIST_EXPLAIN}"><span>{L_MEMBERLIST}</span></a><!-- ENDIF -->
+							    <!-- IF S_USER_LOGGED_IN --><a class="ucp" href="{U_PROFILE}" title="{L_PROFILE}"><span>{L_PROFILE}</span></a>
+<!-- CALENDARIO -->
+<a class="calendario" href="http://www.blackjacksteam.com.br/calendario" title="Calendário de eventos"><span><img class="calendario" src="http://www.blackjacksteam.com.br/forum/styles/Black-Bird/imageset/pt-br/calendario.png"></span></a>
+							        <!-- IF not S_USER_UNREAD_PRIVMSG --><a class="nonewpms" href="{U_PRIVATEMSGS}"><span>{PRIVATE_MESSAGE_INFO}</span></a><!-- ENDIF -->
+							        <!-- IF S_USER_UNREAD_PRIVMSG --><a class="newpms" href="{U_PRIVATEMSGS}" title="{PRIVATE_MESSAGE_INFO}"><span>{PRIVATE_MESSAGE_INFO}</span></a><!-- ENDIF -->
+								<!-- ENDIF -->
+							<!-- ENDIF -->
+							<!-- IF U_MCP --><a class="mcp" href="{U_MCP}"><span>{L_MCP}</span></a><!-- ENDIF -->
+							
+						</div>
+						<br clear="all" />
+						<!-- IF not S_USER_LOGGED_IN and not S_IS_BOT -->
+						<div style="float:left;">
+						    <form action="{S_LOGIN_ACTION}" method="post">
+								<table class="toplogin" cellspacing="0" cellpadding="0" style="width:1000px;">
+									<tr>
+										<td><span class="gensmall">{L_USERNAME}:</span></td>
+                                        <td><input class="post" type="text" name="username" size="10" style="width: 100px" /></td>
+                                        <td><span class="gensmall">{L_PASSWORD}:</span></td>
+                                        <td nowrap="nowrap"><input class="post" type="password" name="password" size="10" style="width: 100px" /></td>
+                                        <td><input type="checkbox" checked="checked" class="radio" name="autologin" />
+                                        <span style="vertical-align: middle;" class="gensmall">{L_LOG_ME_IN}</span></td>
+                                        <td><input type="submit" class="btnmain" name="login" value="{L_LOGIN}" /></td>
+									</tr>
+								</table>
+								{S_LOGIN_REDIRECT}
+								{S_FORM_TOKEN}
+							</form>
+						</div>
+						<!-- ENDIF -->
+						<div style="clear:both;">
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-3596444123871762";
+/* link_superior */
+google_ad_slot = "9769761940";
+google_ad_width = 468;
+google_ad_height = 15;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</center>
+</div>
+					</div>
+					<div id="cb">
+					    <div id="wrapheader">
+						    <table width="100%" cellspacing="0">
+                                <tr>
+                                    <!-- IF S_USER_LOGGED_IN --><td class="gensmall3">{LAST_VISIT_DATE}</td><!-- ENDIF -->
+                                    <td class="gensmall3" align="{S_CONTENT_FLOW_END}">{CURRENT_TIME}<br /></td>
+								</tr>
+							</table>
+						</div>
+						<div id="wrapcentre">

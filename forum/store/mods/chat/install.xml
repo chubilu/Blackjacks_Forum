@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml-stylesheet type="text/xsl" href="modx.prosilver.en.xsl"?>
+<!--For security purposes, please check: http
+://www.phpbb.com/mods/ for the latest version of this MOD. Although MODs are checked before being allowed in the MODs Database there is no guarantee that there are no security problems within the MOD. No support will be given for MODs not found within the MODs Database which can be found at http://www.phpbb.com/mods/-->
+<mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.phpbb.com/mods/xml/modx-1.2.3.xsd">
+	<header>
+		<license>http://opensource.org/licenses/gpl-license.php GNU General Public License v2</license>
+		
+		<title lang="en-GB">AJAX Chat</title>
+
+		<description lang="en-GB">This Mod Adds AJAX Chat/Shoutbox to your forum.
+Users can chat without ever needing to reload the page.</description>
+		
+		<author-notes lang="en-GB"><![CDATA[Copyright 2006-2007 Handyman, StarTrekGuide Group.
+You can find support for this and other mods at http://startrekguide.com/forum]]></author-notes>
+
+		<author-group>
+			<author>
+				<realname>Handyman</realname>
+				<username>Francis Lewis</username>
+				<email>Handyman@startrekaccess.com</email>
+				<homepage></homepage>
+      		<contributions-group>
+      		  <contributions status="past" from="2006-01-01" position="Developer"/>
+      		</contributions-group>
+			</author>			
+		</author-group>
+
+		<mod-version>2.0.0.B8</mod-version>
+
+		<installation>
+			<level>easy</level>
+			<time>180</time>
+			<target-version>3.0.6</target-version>
+		</installation>
+
+		<history>
+			<entry>
+				<date>2007-11-04</date>
+				<rev-version>2.0.0.B8</rev-version>
+				<changelog lang="en">
+					<change>Only registered users can post</change>
+					<change>Added MOD Version Check file to keep track of updates</change>
+					<change>a little code cleanup</change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2007-5-06</date>
+				<rev-version>2.0.0.B7</rev-version>
+				<changelog lang="en">
+					<change>Recoded to use templates</change>
+					<change>Added who's online</change>
+					<change>created prosilver and subsilver2 templates</change>
+					<change>Added delays for users who aren't actively chatting</change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2007-3-13</date>
+				<rev-version>2.0.0.B6</rev-version>
+				<changelog lang="en">					
+					<change>Made it somewhat less dependent on javascript for inputs</change>>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2007-3-12</date>
+				<rev-version>2.0.0.B5</rev-version>
+				<changelog lang="en">
+					<change>Fixed autologin bug</change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2007-2-07</date>
+				<rev-version>2.0.0.B4</rev-version>
+				<changelog lang="en">
+					<change>Increased speed an performance</change>
+					<change>Added Fat effect</change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2007-1-27</date>
+				<rev-version>2.0.0.B3</rev-version>
+				<changelog lang="en">
+					<change>More stable</change>
+					<change>Fixed javascript errors</change>
+					<change>works with all ajax capable browsers</change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2006-8-23</date>
+				<rev-version>1.0.0</rev-version>
+				<changelog lang="en">
+					<change>Original release</change>
+				</changelog>
+			</entry>
+		</history>
+		<link-group>
+			<link type="template" href="contrib/subsilver2.xml" lang="en">subsilver2</link>
+		</link-group>
+	</header>
+		<action-group>
+		<copy>
+			<file from="root/chat.php" to="chat.php" />
+			<file from="root/shout.php" to="shout.php" />
+			<file from="root/chat_install.php" to="chat_install.php" />
+			<file from="root/adm/mods/ajax_chat_version.php" to="adm/mods/ajax_chat_version.php" />
+			<file from="root/language/en/chat.php" to="language/en/chat.php" />
+			<file from="root/styles/prosilver/imageset/*.*" to="styles/prosilver/imageset/*.*" />
+			<file from="root/styles/prosilver/template/*.*" to="styles/prosilver/template/*.*" />
+			<file from="root/styles/prosilver/theme/*.*" to="styles/prosilver/theme/*.*" />			
+		</copy>
+
+		<open src="index.php">
+			<edit>
+				<find><![CDATA[$user->setup('viewforum');]]></find>
+				<action type="after-add"><![CDATA[//-- mod : AJAX Chat ----------------------------------------------------
+//-- add
+include($phpbb_root_path . 'shout.' . $phpEx);
+//-- fin mod : AJAX Chat ------------------------------------------------]]></action>
+			</edit>
+		</open>
+		<open src="viewonline.php">
+			<edit>
+				<find><![CDATA[case 'index':
+			$location = $user->lang['INDEX'];
+			$location_url = append_sid("{$phpbb_root_path}index.$phpEx");
+		break;]]></find>
+				<action type="after-add"><![CDATA[
+		//-- mod : AJAX Chat ----------------------------------------------------
+		//-- add
+		case 'chat':
+            $location = $user->lang['VIEWING_CHAT'];
+            $location_url = append_sid("{$phpbb_root_path}chat.$phpEx");
+        break;
+		//-- fin mod : AJAX Chat ------------------------------------------------]]></action>
+			</edit>
+		</open>
+		<open src="includes/functions.php">
+			<edit>
+				<find><![CDATA['U_ACP' => ($auth->acl_get('a_') && !empty($user->data['is_registered'])) ? append_sid("{$phpbb_root_path}adm/index.$phpEx", false, true, $user->session_id) : '')]]></find>
+				<action type="before-add"><![CDATA[		'U_MCP'         => ($auth->acl_get('m_') || $auth->acl_getf_global('m_')) ? append_sid("{$phpbb_root_path}mcp.$phpEx", 'i=main&amp;mode=front', true, $user->session_id) : '',]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA['U_RESTORE_PERMISSIONS'	=> ($user->data['user_perm_from'] && $auth->acl_get('a_switchperm')) ? append_sid("{$phpbb_root_path}ucp.$phpEx", 'mode=restore_perm') : '',]]></find>
+				<action type="after-add"><![CDATA[		//-- mod : AJAX Chat ----------------------------------------------------
+		//-- add
+		'U_CHAT'                    => append_sid("{$phpbb_root_path}chat.$phpEx"),
+		'S_SHOUT'					=> true,
+		//-- fin mod : AJAX Chat ------------------------------------------------]]></action>
+			</edit>
+		</open>
+		<open src="language/en/common.php">
+			<edit>
+				<find><![CDATA['CHANGING_PROFILE'		=> 'Changing profile settings',]]></find>
+				<action type="after-add"><![CDATA[	//-- mod : AJAX Chat ----------------------------------------------------
+	//-- add
+	'CHAT'					=> 'Chat',
+	'CHAT_EXPLAIN'			=> 'Chat Center',
+	//-- fin mod : AJAX Chat ------------------------------------------------]]></action>
+			</edit>
+			<edit>
+				<find><![CDATA['VIEWED'					=> 'Viewed',]]></find>
+				<action type="after-add"><![CDATA[	//-- mod : AJAX Chat ----------------------------------------------------
+	//-- add
+	'VIEWING_CHAT'            => 'Viewing Shoutbox',
+	//-- fin mod : AJAX Chat ------------------------------------------------]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/index_body.html">
+			<edit>
+				<find><![CDATA[<!-- IF S_DISPLAY_ONLINE_LIST -->]]></find>
+				<action type="before-add"><![CDATA[<!-- INCLUDE chat_body.html -->]]></action>
+			</edit>
+		</open>
+		<open src="styles/prosilver/template/overall_header.html">
+			<edit>
+				<find><![CDATA[<link href="{T_THEME_PATH}/large.css" rel="alternate stylesheet" type="text/css" title="A++" />]]></find>
+				<action type="after-add"><![CDATA[<link href="{T_THEME_PATH}/chat.css" rel="stylesheet" type="text/css" />]]></action>	
+			</edit>
+			<edit>
+				<find><![CDATA[<li class="icon-faq"><a href="{U_FAQ}" title="{L_FAQ_EXPLAIN}">{L_FAQ}</a></li>]]></find>
+				<action type="after-add"><![CDATA[				<li class="icon-chat"><a href="{U_CHAT}" title="{L_CHAT_EXPLAIN}">{L_CHAT}</a></li>]]></action>	
+			</edit>
+		</open>		
+		<open src="styles/prosilver/theme/buttons.css">
+			<comment lang="en">This maybe a partial find, the actual line is longer.</comment>
+			<edit>
+				<find><![CDATA[.sitehome, .icon-faq, .icon-members, .icon-home, .icon-ucp, .icon-register, .icon-logout,]]></find>
+				<inline-edit>
+					<inline-find><![CDATA[.icon-faq,]]></inline-find>
+					<inline-action type="before-add"><![CDATA[.icon-chat, ]]></inline-action>
+				</inline-edit>	
+			</edit>
+		</open>
+		<open src="styles/prosilver/theme/bidi.css">
+			<comment lang="en">This maybe a partial find, the actual line is longer.</comment>
+			<edit>
+				<find><![CDATA[.rtl .sitehome, .rtl .icon-faq, .rtl .icon-members, .rtl .icon-home, .rtl .icon-ucp, .rtl .icon-register, .rtl .icon-logout,]]></find>
+				<inline-edit>
+					<inline-find><![CDATA[.rtl .icon-faq,]]></inline-find>
+					<inline-action type="before-add"><![CDATA[.rtl .icon-chat, ]]></inline-action>
+				</inline-edit>	
+			</edit>
+		</open>
+		<open src="styles/prosilver/theme/colours.css">
+			<edit>
+				<find><![CDATA[.icon-faq						{ background-image: url("{T_THEME_PATH}/images/icon_faq.gif"); }]]></find>
+				<action type="before-add"><![CDATA[.icon-chat						{ background-image: url("{T_THEME_PATH}/images/icon_chat.gif"); }]]></action>	
+			</edit>
+		</open>
+		<open src="styles/prosilver/theme/stylesheet.css">
+			<edit>
+				<find><![CDATA[@import url("colours.css");]]></find>
+				<action type="after-add"><![CDATA[@import url("chat.css");]]></action>	
+			</edit>
+		</open>
+		
+
+		<diy-instructions lang="en">Browse to your ACP, in the address bar of your browswer you should have something like this: http://www.yoursiteaddress.com/adm/index.php.  Delete the following from your address bar adm/index.php (plus anything else that may be after this).  Now add to the address bar chat_install.php?mode=install   Press ENTER on your keyboard this will install the chat database.
+Remove the chat_install.php when you are finished.
+
+You will have to go to the ACP>GENERAL and purge cache.  Also you will have to go to ACP>STYLES tab then go to each templates, themes and imagesets and refresh the style you are working with.</diy-instructions>
+
+	</action-group>
+</mod>

@@ -1,0 +1,11 @@
+Mini Chat
+PHP Version: 5.3.27
+DBMS: MySQL(i) 5.1.56-log
+phpBB3 Version: 3.0.12
+
+Adicionando acp módulo: acp/info/acp_mchat.php
+Falha
+
+Adicionando ucp módulo: ucp/info/ucp_mchat.php
+Falha
+

@@ -1,0 +1,114 @@
+<!-- INCLUDE overall_header.html -->
+
+<!-- INCLUDE forumlist_body.html -->
+<br />
+				<!-- INCLUDE chat_body.html -->
+
+<!-- IF not S_IS_BOT or U_TEAM -->
+   <br />
+   <div class='menu_top'><div class='menu_top_l'><div class='menu_top_r'>
+        
+        </div></div></div>  
+        <div class='m_l'><div class='m_r'><div class='menu_text'>
+    <span class="gensmall"><!-- IF not S_IS_BOT --><a href="{U_DELETE_COOKIES}">{L_DELETE_COOKIES}</a><!-- IF U_TEAM --> | <!-- ENDIF --><!-- ENDIF --><!-- IF U_TEAM --><a href="{U_TEAM}">{L_THE_TEAM}</a><!-- ENDIF --></span><br />
+<!-- ENDIF -->
+
+<br clear="all" />
+
+
+
+<!-- IF S_DISPLAY_ONLINE_LIST -->
+	<br clear="all" />
+
+    {$CA_BLOCK_START}
+
+	<table class="tablebg" width="100%" cellspacing="{$CA_SPACING}">
+	<tr><td class="rowfastx" colspan="2"><!-- IF U_VIEWONLINE --><a href="{U_VIEWONLINE}">{L_WHO_IS_ONLINE}</a><!-- ELSE -->{L_WHO_IS_ONLINE}<!-- ENDIF --></td></tr>
+    <tr>
+	<!-- IF LEGEND -->
+		<td class="row1" rowspan="2" align="center" valign="middle"><img src="{T_THEME_PATH}/images/whosonline.png" alt="{L_WHO_IS_ONLINE}" /></td>
+	<!-- ELSE -->
+		<td class="row1" align="center" valign="middle"><img src="{T_THEME_PATH}/images/whosonline.png" alt="{L_WHO_IS_ONLINE}" /></td>
+	<!-- ENDIF -->
+		<td class="row1" width="100%"><span class="genmed">{TOTAL_USERS_ONLINE} ({L_ONLINE_EXPLAIN})<br />{RECORD_USERS}<br /><br />{LOGGED_IN_USER_LIST}</span></td>
+	</tr>
+	<!-- IF LEGEND -->
+		<tr>
+			<td class="row1 nobold"><b class="gensmall">{L_LEGEND} :: {LEGEND}</b></td>
+		</tr>
+	<!-- ENDIF -->
+	</table>
+	{$CA_BLOCK_END}
+<!-- ENDIF -->
+
+<!-- IF S_DISPLAY_BIRTHDAY_LIST && BIRTHDAY_LIST -->
+	<br clear="all" />
+    
+    {$CA_BLOCK_START}
+
+	<table class="tablebg" width="100%" cellspacing="{$CA_SPACING}">
+    	<tr><td class="forumheader2" colspan="2">{L_BIRTHDAYS}</td></tr>
+	<tr>
+		<td class="row1" align="center" valign="middle"><img src="{T_THEME_PATH}/images/birthday.gif" alt="{L_BIRTHDAYS}" /></td>
+		<td class="row1 nobold" width="100%"><p class="genmed"><!-- IF BIRTHDAY_LIST -->{L_CONGRATULATIONS}: <b>{BIRTHDAY_LIST}</b><!-- ELSE -->{L_NO_BIRTHDAYS}<!-- ENDIF --></p></td>
+	</tr>
+	</table>
+	{$CA_BLOCK_END}
+<!-- ENDIF -->
+
+<br clear="all" />
+
+{$CA_BLOCK_START}
+
+<table class="tablebg" width="100%" cellspacing="{$CA_SPACING}">
+	<tr><td class="rowfastx" colspan="2">{L_STATISTICS}</td></tr>
+<tr>
+	<td class="row1"><img src="{T_THEME_PATH}/images/stats.png" alt="{L_STATISTICS}" /></td>
+	<td class="row1 nobold" width="100%" valign="middle"><p class="genmed">{TOTAL_POSTS} | {TOTAL_TOPICS} | {TOTAL_USERS} | {NEWEST_USER}</p></td>
+</tr>
+</table>
+{$CA_BLOCK_END}
+
+<!-- IF not S_USER_LOGGED_IN and not S_IS_BOT -->
+	<br clear="all" />
+
+	<form method="post" action="{S_LOGIN_ACTION}">
+	
+	{$CA_BLOCK_START}
+
+	<table class="tablebg" width="100%" cellspacing="{$CA_SPACING}">
+    	<tr><td class="forumheader2" colspan="2"><a href="{U_LOGIN_LOGOUT}">{L_LOGIN_LOGOUT}</a></td></tr>
+	<tr>
+		<td class="row1" align="center"><span class="genmed">{L_USERNAME}:</span> <input class="post" type="text" name="username" size="10" />&nbsp; <span class="genmed">{L_PASSWORD}:</span> <input class="post" type="password" name="password" size="10" />&nbsp; <!-- IF S_AUTOLOGIN_ENABLED --><span class="gensmall">{L_LOG_ME_IN}</span> <input type="checkbox" class="radio" name="autologin" />&nbsp;<!-- ENDIF --> <input type="submit" class="btnmain" name="login" value="{L_LOGIN}" /></td>
+	</tr>
+	</table>
+	{$CA_BLOCK_END}
+	{S_FORM_TOKEN}
+	</form>
+<!-- ENDIF -->
+
+<br clear="all" />
+<div align="center">
+<table>
+<tr><td class="cat">
+<table>
+<tr>
+	<td width="20" align="center">{FORUM_NEW_IMG}</td>
+	<td><span class="gensmall">{L_NEW_POSTS}</span></td>
+	<td>&nbsp;&nbsp;</td>
+	<td width="20" align="center">{FORUM_IMG}</td>
+	<td><span class="gensmall">{L_NO_NEW_POSTS}</span></td>
+	<td>&nbsp;&nbsp;</td>
+	<td width="20" align="center">{FORUM_LOCKED_IMG}</td>
+	<td><span class="gensmall">{L_FORUM_LOCKED}</span></td>
+</tr>
+</table>
+</td></tr></table>
+</div>
+    </div></div></div>      
+        <div class='menu_bot'>    
+        <div class='menu_bot_l'>  
+        <div class='menu_bot_r'>
+        </div></div></div>
+
+<!-- INCLUDE overall_footer.html -->

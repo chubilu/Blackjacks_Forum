@@ -1,0 +1,49 @@
+<!-- INCLUDE overall_header.html -->
+
+<!-- INCLUDE forumlist_body.html -->
+
+
+<table width="100%" cellspacing="0">
+<tr>
+
+	<td class="bg_title"><h4><!-- IF S_DISPLAY_ONLINE_LIST --><!-- IF U_VIEWONLINE --><a href="{U_VIEWONLINE}">{L_WHO_IS_ONLINE}</a><!-- ELSE -->{L_WHO_IS_ONLINE}<!-- ENDIF --> -<!-- ENDIF -->&nbsp;{L_STATISTICS}</h4></td>
+
+	</tr>
+<tr>
+	<td width="100%" style="padding-left:5px;padding-top:8px;padding-bottom:10px;">
+	<span class="genmed">{TOTAL_USERS_ONLINE} ({L_ONLINE_EXPLAIN})<br />{RECORD_USERS}<br /><br />{LOGGED_IN_USER_LIST}</span>
+	<!-- IF S_DISPLAY_ONLINE_LIST --><!-- IF LEGEND --><br /><b class="gensmall">{L_LEGEND} :: {LEGEND}</b><br /><br /><!-- ENDIF --><!-- ENDIF -->
+	<p class="genmed">{TOTAL_POSTS} | {TOTAL_TOPICS} | {TOTAL_USERS} | {NEWEST_USER}</p>
+	</td>
+</tr>
+</table>
+
+<span class="spacer"><img src="{T_THEME_PATH}/images/spacer.gif" width="1100px" height="10px" alt="" /></span>
+
+<!-- IF S_DISPLAY_BIRTHDAY_LIST -->
+
+	<table width="100%" cellspacing="0">
+		<tr>
+			<td class="bg_title"><h4>{L_BIRTHDAYS}</h4></td>
+		</tr>
+		<tr>
+		<td class="row3" width="100%"><p class="genmed"><!-- IF BIRTHDAY_LIST -->{L_CONGRATULATIONS}: <b>{BIRTHDAY_LIST}</b><!-- ELSE -->{L_NO_BIRTHDAYS}<!-- ENDIF --></p></td>
+	</tr>
+	</table>
+	
+<!-- ENDIF -->
+
+<table class="legend">
+<tr>
+	<td width="20" align="center">{FORUM_UNREAD_IMG}</td>
+	<td><span class="gensmall">{L_UNREAD_POSTS}</span></td>
+	<td>&nbsp;&nbsp;</td>
+	<td width="20" align="center">{FORUM_IMG}</td>
+	<td><span class="gensmall">{L_NO_UNREAD_POSTS}</span></td>
+	<td>&nbsp;&nbsp;</td>
+	<td width="20" align="center">{FORUM_LOCKED_IMG}</td>
+	<td><span class="gensmall">{L_FORUM_LOCKED}</span></td>
+</tr>
+</table>
+
+<!-- INCLUDE overall_footer.html -->
